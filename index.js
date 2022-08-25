@@ -50,7 +50,10 @@ app.get('/blog-detail/:idParams', function (request, response) {
             let dataBlog = data.map(function (item) {
                 return {
                     ...item,
+                    start_date: getFullTime(item.start_date),
+                    end_date: getFullTime(item.end_date),
                     duration: getDistanceTime(new Date(item.start_date), new Date(item.end_date))
+
                 }
             })
 
@@ -161,25 +164,19 @@ app.get('/delete-blog/:idParams', function (request, response) {
 
 
 function getFullTime(time) {
-    let month = ["Januari", "Febuari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
-    let date = time.getDate();
-    let monthIndex = time.getMonth();
-    let year = time.getFullYear();
+    let month = ["Januari", "Febuari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember"]
 
-    let hours = time.getHours();
-    let minutes = time.getMinutes();
+    let date = time.getDate()
+    let monthIndex = time.getMonth()
+    let year = time.getFullYear()
 
-    if (hours < 10) {
-        hours = "0" + hours;
-    } else if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
+    let hours = time.getHours()
+    let minutes = time.getMinutes()
 
-    let fullTime = `${date} ${month[monthIndex]} ${year} ${hours}:${minutes} WIB`;
-    return fullTime;
+    let fullTime = `${date} ${month[monthIndex]} ${year}`
+    return fullTime
 }
-
 function getDistanceTime(time, end) {
     let timeNow = end;
     let timePost = time;
